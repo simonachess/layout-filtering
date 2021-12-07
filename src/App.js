@@ -1,23 +1,32 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react'
+import Search from './components/Search';
+import Sidebar from './components/Sidebar';
+import Main from './components/Main';
 
 function App() {
+
+  const [selectedItemID, setSelectedItemID] = useState();
+  const [input, setInput] = useState('');
+
+  const handleClick = (id) => {
+    setSelectedItemID(id)
+  }
+
+  const onSearch = (e) => {
+    setInput(e.target.value)
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+
+    <div className="app">
+      <header>
+        <Search onSearch={onSearch} value={input} />
       </header>
+      <nav>
+        <Sidebar handleClick={handleClick} />
+      </nav>
+      <article> <Main selectedItemID={selectedItemID} searchValue={input} /></article>
     </div>
   );
 }
